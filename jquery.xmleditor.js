@@ -849,8 +849,8 @@ $.widget( "xml.xmlEditor", {
 				}
 			}
 			var xmlString = self.xml2Str(self.xmlState.xml);
-			var blob = new Blob([xmlString], { type: "text/xml" }); 
-			var url = URL.createObjectURL(blob);
+			var generatedXML = new Blob([xmlString], { type: "text/xml" }); 
+			var url = URL.createObjectURL(generatedXML);
 			
 			exportDialog.dialog('option', 'title', '');
 			var fileName = exportDialog.find('input[type="text"]').val();
