@@ -887,7 +887,8 @@ $.widget( "xml.xmlEditor", {
 		// convert XML DOM to string
 		var xmlString = this.xml2Str(this.xmlState.xml);
 		$("." + submissionStatusClass).html("Submitting...");
-		var formData = new FormData('file',xmlString);
+		var formData = new FormData();
+		formData.append('file',xmlString);
 		var self = this;
 		$.ajax({
 			url : config.url,
