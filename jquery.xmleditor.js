@@ -888,36 +888,11 @@ $.widget( "xml.xmlEditor", {
 		var xmlString = this.xml2Str(this.xmlState.xml);
 		$("." + submissionStatusClass).html("Submitting...");
 		var formData = new FormData();
-		formData.append('file',xmlString);
-		var self = this;
-		$.ajax({
-			url : config.url,
-			contentType : false,
-			type : "POST",
-			data : formData,
-			success : function(response) {
-				// Process the response from the server using the provided response handler
-				// If the result of the handler evaluates true, then it is assumed to be an error
-				var outcome = config.responseHandler(response);
-
-				if (!outcome) {
-					self.xmlState.changesCommittedEvent();
-					self.clearProblemPanel();
-				} else {
-					self.xmlState.syncedChangeEvent();
-					$("." + submissionStatusClass).html("Failed to submit<br/>See errors at top").css("background-color", "#ffbbbb").animate({backgroundColor: "#ffffff"}, 1000);
-					self.addProblem("Failed to submit xml document", outcome);
-				}
-			},
-			error : function(jqXHR, exception) {
-				if (config.errorHandler) {
-					config.errorHandler(jqXHR, exception);
-					return;
-				}
-
-				self.options.submitErrorHandler(jqXHR, exception);
-			}
-		});
+		var blob = new Blob([xmlString], { type: "text/xml"});
+		formData.append('file',blob);
+		var request = new XMLHttpRequest();
+		request.open("POST",  config.url);
+		request.send(formData);
 	},
 	
 	// Default server submission response parser, mostly for reference.  
