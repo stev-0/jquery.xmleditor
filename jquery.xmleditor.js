@@ -887,12 +887,13 @@ $.widget( "xml.xmlEditor", {
 		// convert XML DOM to string
 		var xmlString = this.xml2Str(this.xmlState.xml);
 		$("." + submissionStatusClass).html("Submitting...");
+		var formData = new FormData('file',xmlString);
 		var self = this;
 		$.ajax({
 			url : config.url,
-			contentType : "application/xml",
+			contentType : false,
 			type : "POST",
-			data : xmlString,
+			data : formData,
 			success : function(response) {
 				// Process the response from the server using the provided response handler
 				// If the result of the handler evaluates true, then it is assumed to be an error
