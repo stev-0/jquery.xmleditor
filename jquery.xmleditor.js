@@ -889,7 +889,7 @@ $.widget( "xml.xmlEditor", {
 		$("." + submissionStatusClass).html("Submitting...");
 		var formData = new FormData();
 		var blob = new Blob([xmlString], { type: "text/xml"});
-		formData.append('file',blob);
+		formData.append('file',blob,'testupload.xml');
 		var request = new XMLHttpRequest();
 		request.open("POST",  config.url);
 		request.send(formData);
